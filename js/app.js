@@ -1,11 +1,17 @@
 var Msg = Backbone.Model.extend({
-    defaults: {desc: 'Sample message', read: false},
+    defaults: {desc: 'Sample message', read: false, status: 'unread'},
     //localStorage: new Backbone.LocalStorage('msg-backbone')
     toggleRead: function() {
 	if(this.get('read'))
+	{
 	    this.set({read: false});
+	    this.set({status: 'unread'});
+	}
 	else
+	{
 	    this.set({read: true});
+	    this.set({status: 'read'});
+	}
     }
 });
 
@@ -15,9 +21,9 @@ msg.on('change', function() {console.log("Data changed");});
 
 var MsgView = Backbone.View.extend({
     el: '#msgs',
-    myList: _.template('<li><input type=checkbox id="listedMsg" class="<%= read %>"' + 
+    myList: _.template('<li class="<%= status %>"><input type=checkbox id="listedMsg"' + 
 		       '<% if(read) print("checked") %>/>' + 
-		       'Msg: "<%= desc %>"</li>'),
+		       'Msg: <%= desc %></li>'),
     events: {
 	'dblclick li': 'alertClick',
 	'change input[id="listedMsg"]': 'toggleRead'
@@ -43,5 +49,6 @@ var MsgView = Backbone.View.extend({
 });
 
 var msgView = new MsgView({model: msg});
+msgView.render();
 
 
