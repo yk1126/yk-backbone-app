@@ -1,6 +1,6 @@
 var Msg = Backbone.Model.extend({
     defaults: {desc: 'Sample message', read: false},
-    //  localStorage: new Backbone.LocalStorage('msg-backbone')
+    //localStorage: new Backbone.LocalStorage('msg-backbone')
     toggleRead: function() {
 	if(this.get('read'))
 	    this.set({read: false});
@@ -14,11 +14,16 @@ var msg = new Msg({desc: 'This is my first message.'});
 msg.on('change', function() {console.log("Data changed");});
 
 var MsgView = Backbone.View.extend({
-    el: '#msgs',     //Set an existing element with id '#msgs'
-    myList: _.template('<li><input type=checkbox id="listedMsg"' + '<% if(read) print("checked") %>/>' + 'Msg: "<%= desc %>"</li>'),
+    el: '#msgs',
+    myList: _.template('<li><input type=checkbox id="listedMsg" class="<%= read %>"' + 
+		       '<% if(read) print("checked") %>/>' + 
+		       'Msg: "<%= desc %>"</li>'),
     events: {
 	'dblclick li': 'alertClick',
 	'change input[id="listedMsg"]': 'toggleRead'
+    },
+    initialize: function() {
+	this.model.on('change', this.render, this);
     },
     render: function() {
 	//var html = '<li>' + this.model.get('desc') + '</li>';
@@ -26,6 +31,7 @@ var MsgView = Backbone.View.extend({
 	//console.log(html);
 	//console.log(this.el);
 	var attributes = this.model.toJSON();
+	console.log(attributes);
 	this.$el.html(this.myList(attributes));
     },
     alertClick: function(event) {
