@@ -1,0 +1,14 @@
+var MsgList = Backbone.Collection.extend({
+    model: Msg,
+    initialize: function() {
+	this.on('remove', this.hideMsg);
+    },
+    hideModel: function(msg) {
+	msg.trigger('hide');
+    }
+});
+
+var msgList = new MsgList();
+msgList.add(msg1);
+msgList.add(msg2);
+msgList.add(msg3);

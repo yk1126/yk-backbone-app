@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <title>Backbone.js | YKApp</title>
-    <link rel="stylesheet" href="styles/appstyle.css"/>
+    <link rel="stylesheet" href="assets/appstyle.css"/>
   </head>
+
   <body>
     <h1>MY APP</h1>
+
     <input type="text" id="getmessage" placeholder="Enter your message" />
+
     <ul id="msgs">
     </ul>
+
     <script src="js/lib/jquery.js"></script>
     <script src="js/lib/underscore.js"></script>
     <script src="js/lib/backbone.js"></script>
     <script src="js/lib/backbone.localStorage.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/models/msg.js"></script>
+    <script src="js/collections/msg_list.js"></script>
+    <script src="js/views/msg_view.js"></script>
+    <script src="js/views/msg_list_view.js"></script>
   </body>
+
 </html>
